@@ -13,10 +13,10 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.peihua.tools.utils.dLog
 import com.peihua.tools.utils.dip2px
 import com.peihua.tools.utils.getColor
 import com.peihua.tools.utils.getDrawableCompat
-import com.socks.library.KLog
 
 /**
  * recycleView 列表分割线
@@ -144,7 +144,7 @@ class DividerItemDecoration : ItemDecoration {
             val params = child.layoutParams as RecyclerView.LayoutParams
             val left = child.right + params.rightMargin
             val right = left + drawable.intrinsicHeight
-            KLog.d("LockCart>>>>left=$left,top=$top,right=$right,bottom=$bottom")
+            dLog { "LockCart>>>>left=$left,top=$top,right=$right,bottom=$bottom" }
             drawable.setBounds(left, top, right, bottom)
             drawable.draw(c!!)
         }
