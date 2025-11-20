@@ -19,7 +19,7 @@ KotlinMultiplatformUtils是一个Kotlin工具库，可以简化Android开发，�
 
 ## 如何引用
 * 把 `maven { url 'https://jitpack.io' }` 加入到 repositories 中
-* 添加如下依赖，末尾的「latestVersion」指的是KotlinMultiplatformUtils [![Download](https://jitpack.io/v/peihua8858/kotlinCommonUtils.svg)](https://jitpack.io/#peihua8858/KotlinMultiplatformUtils) 里的版本名称，请自行替换。
+* 添加如下依赖，末尾的「latestVersion」指的是KotlinMultiplatformUtils [![Download](https://jitpack.io/v/peihua8858/KotlinMultiplatformUtils.svg)](https://jitpack.io/#peihua8858/KotlinMultiplatformUtils) 里的版本名称，请自行替换。
 使用 Gradle
 
 ```sh
