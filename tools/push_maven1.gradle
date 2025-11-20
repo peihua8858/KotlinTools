@@ -1,31 +1,31 @@
 // publish-maven-simple.gradle - 简化版本
 apply plugin: 'maven-publish'
-def isRelease = false
+//def isRelease = false
 version = "1.0.0"
-def publishVersion = isRelease ? version : version + "-SNAPSHOT"
-def publishArtifactId="KotlinTools"
+//def publishVersion = isRelease ? version : version + "-SNAPSHOT"
+//def publishArtifactId="KotlinTools"
 group = 'com.github.peihua8858'
 def localRepoUrl = "${rootProject.buildDir}/repos"
 
 // 只创建不冲突的发布
 publishing {
-    publications.all { publication ->
-       def platform= publication.name
-        def originalArtifactId = publication.artifactId
-        println ">>>>originalArtifactId:" +originalArtifactId+">>>platform:"+platform
-        if (publication.name == "kotlinMultiplatform") {
-            // 主元数据 publication
-            publication.artifactId = publishArtifactId
-        } else if (publication.name.endsWith("Publication")) {
-            // Android 相关的 publication
-            def variantName = publication.name.replace("Publication", "")
-            publication.artifactId = "${publishArtifactId}-${variantName.toLowerCase()}"
-        } else {
-            // 平台特定的 publication
-            publication.artifactId = "${publishArtifactId}-${publication.name}"
-        }
-        publication.version= publishVersion
-    }
+//    publications.all { publication ->
+//       def platform= publication.name
+//        def originalArtifactId = publication.artifactId
+//        println ">>>>originalArtifactId:" +originalArtifactId+">>>platform:"+platform
+//        if (publication.name == "kotlinMultiplatform") {
+//            // 主元数据 publication
+//            publication.artifactId = publishArtifactId
+//        } else if (publication.name.endsWith("Publication")) {
+//            // Android 相关的 publication
+//            def variantName = publication.name.replace("Publication", "")
+//            publication.artifactId = "${publishArtifactId}-${variantName.toLowerCase()}"
+//        } else {
+//            // 平台特定的 publication
+//            publication.artifactId = "${publishArtifactId}-${publication.name}"
+//        }
+//        publication.version= publishVersion
+//    }
 
     repositories {
         maven {
