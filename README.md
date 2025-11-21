@@ -1,25 +1,25 @@
 # Kotlin Android Util
-KotlinMultiplatformUtils是一个Kotlin工具库，可以简化Android开发，使代码更加简洁和可读。
+KotlinTools是一个Kotlin工具库，可以简化Android开发，使代码更加简洁和可读。
 
 [English](README_EN.md)
 
-[![Jitpack](https://jitpack.io/v/peihua8858/KotlinMultiplatformUtils.svg)](https://github.com/peihua8858)
+[![Jitpack](https://jitpack.io/v/peihua8858/KotlinTools.svg)](https://github.com/peihua8858)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/peihua8858)
-[![Star](https://img.shields.io/github/stars/peihua8858/KotlinMultiplatformUtils.svg)](https://github.com/peihua8858/KotlinMultiplatformUtils)
+[![Star](https://img.shields.io/github/stars/peihua8858/KotlinTools.svg)](https://github.com/peihua8858/KotlinTools)
 
 
 ## 目录
--[最新版本](https://github.com/peihua8858/KotlinMultiplatformUtils/releases/tag/1.1.1)<br>
+-[最新版本](https://github.com/peihua8858/KotlinTools/releases/tag/1.1.1)<br>
 -[如何引用](#如何引用)<br>
 -[进阶使用](#进阶使用)<br>
 -[权限](#权限)<br>
--[如何提Issues](https://github.com/peihua8858/KotlinMultiplatformUtils/wiki/%E5%A6%82%E4%BD%95%E6%8F%90Issues%3F)<br>
+-[如何提Issues](https://github.com/peihua8858/KotlinTools/wiki/%E5%A6%82%E4%BD%95%E6%8F%90Issues%3F)<br>
 -[License](#License)<br>
 
 
 ## 如何引用
 * 把 `maven { url 'https://jitpack.io' }` 加入到 repositories 中
-* 添加如下依赖，末尾的「latestVersion」指的是KotlinMultiplatformUtils [![Download](https://jitpack.io/v/peihua8858/KotlinMultiplatformUtils.svg)](https://jitpack.io/#peihua8858/KotlinMultiplatformUtils) 里的版本名称，请自行替换。
+* 添加如下依赖，末尾的「latestVersion」指的是KotlinTools [![Download](https://jitpack.io/v/peihua8858/KotlinTools.svg)](https://jitpack.io/#peihua8858/KotlinTools) 里的版本名称，请自行替换。
 使用 Gradle
 
 ```sh
@@ -31,9 +31,9 @@ repositories {
 
 dependencies {
   // KotlinCommonUtils
-   implementation 'com.github.peihua8858.KotlinMultiplatformUtils:KotlinTools:${latestVersion}'
-  implementation 'com.github.peihua8858.KotlinMultiplatformUtils:KotlinTools-jvm:${latestVersion}'
-  implementation 'com.github.peihua8858.KotlinMultiplatformUtils:KotlinTools-android:${latestVersion}'
+   implementation 'com.github.peihua8858.KotlinTools:tools:${latestVersion}'
+  implementation 'com.github.peihua8858.KotlinTools:tools-jvm:${latestVersion}'
+  implementation 'com.github.peihua8858.KotlinTools:tools-android:${latestVersion}'
 }
 ```
 
