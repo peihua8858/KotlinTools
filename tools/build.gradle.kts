@@ -13,7 +13,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.peihua.tools"
+        namespace = "com.peihua8858.tools"
         compileSdk = 35
         minSdk = 24
 

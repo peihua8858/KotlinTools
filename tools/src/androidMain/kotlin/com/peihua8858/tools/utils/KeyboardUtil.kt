@@ -1,0 +1,65 @@
+@file:JvmName("KeyboardUtil")
+@file:JvmMultifileClass
+
+package com.peihua8858.tools.utils
+
+import android.content.Context
+import android.view.View
+
+/**
+ * 显示软键盘
+ *
+ * @param view 控件
+ */
+fun View?.showSoftKeyboard() {
+    if (this.isNull()) {
+        return
+    }
+    showSoftKeyboard(context, this)
+}
+
+/**
+ * 显示软键盘
+ *
+ * @param context 应用程序上下文
+ * @param view    控件
+ */
+fun Any?.showSoftKeyboard(context: Context?, view: View?) {
+    if (context != null && view != null) {
+        try {
+            val imm =context.inputMethodManager
+            imm?.showSoftInput(view,0)
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+    }
+}
+
+/**
+ * 隐藏软键盘
+ *
+ * @param view 控件
+ */
+fun View?.hideSoftKeyboard() {
+    if (this == null) {
+        return
+    }
+    hideSoftKeyboard(context, this)
+}
+
+/**
+ * 隐藏软键盘
+ *
+ * @param context 当前Activity
+ * @param view    控件
+ */
+fun Any?.hideSoftKeyboard(context: Context?, view: View?) {
+    if (context != null && view != null) {
+        try {
+            val imm =context.inputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+    }
+}

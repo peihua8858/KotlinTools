@@ -8,7 +8,7 @@ def mavenPwd = "longxl123"
 def localFile = "${rootDir}/plugin_libs"
 version = "1.0.0"
 def sdkVersionName = isRelease ? version : version + "-SNAPSHOT"
-def group = "com.peihua.tools"
+def group = "com.peihua8858.tools"
 publishing {
     publications {
         service(MavenPublication) {
