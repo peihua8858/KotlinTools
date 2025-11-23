@@ -11,6 +11,7 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicBlur
+import android.util.Log
 import androidx.core.graphics.createBitmap
 import androidx.exifinterface.media.ExifInterface
 
@@ -24,10 +25,12 @@ import androidx.exifinterface.media.ExifInterface
  * @date 2022/5/13 16:54
  * @version 1.0
  */
-fun Bitmap.blur(context: Context, radius:Float, sale:Float): Bitmap {
+fun Bitmap.blur(context: Context, radius: Float, sale: Float): Bitmap {
     //创建一个缩小后的bitmap
-    val inputBitmap = Bitmap.createScaledBitmap(this, (width/sale).toInt(),
-        (height/sale).toInt(), false)
+    val inputBitmap = Bitmap.createScaledBitmap(
+        this, (width / sale).toInt(),
+        (height / sale).toInt(), false
+    )
     //创建将在ondraw中使用到的经过模糊处理后的bitmap
     val outputBitmap = Bitmap.createBitmap(inputBitmap)
 
@@ -94,4 +97,20 @@ fun Bitmap.toBlackAndWhite(): Bitmap {
     paint.setColorFilter(ColorMatrixColorFilter(ma))
     canvas.drawBitmap(this, 0f, 0f, paint)
     return bmpMonochrome
+}
+
+
+fun Bitmap.transformBitmap(transformMatrix: Matrix): Bitmap {
+    try {
+        val converted = Bitmap.createBitmap(
+            this, 0, 0,
+            this.getWidth(), this.getHeight(), transformMatrix, true
+        )
+        if (!this.sameAs(converted)) {
+            return converted
+        }
+    } catch (error: OutOfMemoryError) {
+        eLog { "transformBitmap: ${error.stackTraceToString()}" }
+    }
+    return this
 }
