@@ -9,7 +9,7 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false">
             <meta-data
-                android:name="com.peihua.tools.KotlinUtilInitializer"
+                android:name="com.peihua8858.tools.KotlinUtilInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>
