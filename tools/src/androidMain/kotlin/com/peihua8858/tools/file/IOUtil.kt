@@ -13,6 +13,7 @@ import com.peihua8858.tools.utils.eLog
 import androidx.exifinterface.media.ExifInterface
 import com.peihua8858.tools.utils.dLog
 import com.peihua8858.tools.utils.eLog
+import com.peihua8858.tools.utils.transformBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -252,12 +253,11 @@ val InputStream.cRC32: CRC32
     }
 
 
-
 fun InputStream.adjustBitmapOrientation(decodeBitmap: Bitmap): Bitmap? {
     return try {
         val matrix = orientationMatrix
         dLog { "adjustBitmapOrientation, adjust degree " + matrix + "to 0." }
-        BitmapLoadUtils.transformBitmap(decodeBitmap, matrix)
+        decodeBitmap.transformBitmap(matrix)
     } catch (e: Throwable) {
         e.printStackTrace()
         decodeBitmap
