@@ -2,8 +2,6 @@ package com.peihua8858.tools.encrypt;
 
 import android.util.Base64;
 
-import com.fz.common.encrypt.AbstractEncrypt;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;

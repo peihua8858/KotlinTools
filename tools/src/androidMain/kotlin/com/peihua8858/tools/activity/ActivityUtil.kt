@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.app.ComponentActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.*
 import com.peihua8858.tools.ContextInitializer
 import com.peihua8858.tools.utils.getDimens
 import com.peihua8858.tools.utils.getResourceId

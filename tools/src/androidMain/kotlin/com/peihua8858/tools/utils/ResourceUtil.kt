@@ -1,6 +1,5 @@
 @file:JvmName("ResourceUtil")
 @file:JvmMultifileClass
-
 package com.peihua8858.tools.utils
 
 import android.content.Context

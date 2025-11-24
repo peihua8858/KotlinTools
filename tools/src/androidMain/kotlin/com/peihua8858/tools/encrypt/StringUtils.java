@@ -1,7 +1,5 @@
 package com.peihua8858.tools.encrypt;
 
-import com.fz.common.encrypt.CharSequenceUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;

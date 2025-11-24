@@ -64,7 +64,7 @@ object Logcat : CoroutineScope by WorkScope() {
     }
 
     private fun format(format: String, vararg args: Any?): String? {
-        return if (args.isEmpty()) format else String.format(
+        return if (args.isEmpty()) format else String.Companion.format(
             Locale.US,
             format,
             *args

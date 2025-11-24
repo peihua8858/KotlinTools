@@ -188,9 +188,9 @@ fun String?.getUriParameter(key: String): String {
 
 fun Context?.getResourceUrl(@DrawableRes resId: Int): String {
     val context = ContextInitializer.context
-    checkNotNull(context){"Context is null."}
+    kotlin.checkNotNull(context) { "Context is null." }
     val packageName = context.packageName
-    checkNotNull(packageName){"Context is null."}
+    kotlin.checkNotNull(packageName) { "Context is null." }
     return getResourceUrl(packageName, resId)
 }
 

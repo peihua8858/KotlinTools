@@ -1,7 +1,5 @@
 package com.peihua8858.tools.encrypt;
 
-import com.fz.common.encrypt.AbstractEncrypt;
-
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;

@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Looper
 import androidx.annotation.NonNull
+import com.peihua8858.tools.utils.dLog
+import com.peihua8858.tools.utils.eLog
 import androidx.exifinterface.media.ExifInterface
 import com.peihua8858.tools.utils.dLog
 import com.peihua8858.tools.utils.eLog

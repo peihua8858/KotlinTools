@@ -21,7 +21,7 @@ import java.io.Serializable
  * @version 1.0
  */
 fun <K, V : Parcelable> Map<K, MutableList<V>>.deepCloneMapOfParcelableList(): MutableMap<K, MutableList<V>> {
-    if (this.isNullOrEmpty()) {
+    if (this.isEmpty()) {
         return mutableMapOf()
     }
     val source = Parcel.obtain()

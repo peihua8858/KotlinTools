@@ -3,9 +3,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.fz.common.encrypt.Hex;
-import com.fz.common.encrypt.MessageDigestAlgorithms;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
