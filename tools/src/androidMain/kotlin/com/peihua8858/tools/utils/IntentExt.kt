@@ -7,6 +7,10 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Parcelable
 
+inline fun <reified T> Intent?.getParcelableExtraCompat(name: String?): T? {
+    return getParcelableExtraCompat(name, T::class.java)
+}
+
 fun <T> Intent?.getParcelableExtraCompat(name: String?, clazz: Class<T>): T? {
     if (this == null) return null
     return if (isTiramisu) {
@@ -14,6 +18,10 @@ fun <T> Intent?.getParcelableExtraCompat(name: String?, clazz: Class<T>): T? {
     } else {
         getParcelableExtra(name)
     }
+}
+
+inline fun <reified T : Parcelable> Intent?.getParcelableArrayListExtraCompat(name: String?): ArrayList<T> {
+    return getParcelableArrayListExtraCompat(name, T::class.java)
 }
 
 fun <T : Parcelable> Intent?.getParcelableArrayListExtraCompat(name: String?, clazz: Class<T>): ArrayList<T> {
@@ -25,6 +33,10 @@ fun <T : Parcelable> Intent?.getParcelableArrayListExtraCompat(name: String?, cl
     }
 }
 
+inline fun <reified T> Bundle?.getParcelableCompat(name: String?): T? {
+    return getParcelableCompat(name, T::class.java)
+}
+
 fun <T> Bundle?.getParcelableCompat(name: String?, clazz: Class<T>): T? {
     if (this == null) return null
     return if (isTiramisu) {
@@ -32,6 +44,10 @@ fun <T> Bundle?.getParcelableCompat(name: String?, clazz: Class<T>): T? {
     } else {
         getParcelable(name)
     }
+}
+
+inline fun <reified T : Parcelable> Bundle?.getParcelableArrayListCompat(name: String?): ArrayList<T> {
+    return getParcelableArrayListCompat(name, T::class.java)
 }
 
 fun <T : Parcelable> Bundle?.getParcelableArrayListCompat(name: String?, clazz: Class<T>): ArrayList<T> {
