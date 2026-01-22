@@ -21,7 +21,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.compareTo
 import kotlin.coroutines.resume
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.text.get
 
 fun String?.toBase64(): ByteArray? {
     return if (null == this) {
@@ -221,3 +225,34 @@ fun CharSequence?.firstLetterUpperCase(): String {
 //    }
 //    return this ?: defaultValue()
 //}
+
+
+
+fun printStackTrace() {
+    dLog { Thread.currentThread().stackTrace.joinToString(separator = "\n") }
+}
+
+
+fun getClassLineNumber(stackTraceIndex: Int): String {
+    val stackTrace = Thread.currentThread().getStackTrace()
+    //stackTraceIndex + 1 去掉当前方法
+    val targetElement = stackTrace[max(0, min(stackTraceIndex + 1, stackTrace.size - 1))]
+    val fileName = targetElement.fileName
+    var className = fileName
+    if (fileName.isEmpty()) {
+        className = targetElement.className
+        val classNameInfo = className.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (classNameInfo.isNotEmpty()) {
+            className = classNameInfo[classNameInfo.size - 1] + ".java"
+        }
+        if (className.contains("$")) {
+            className = className.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0] + ".java"
+        }
+    }
+    val methodName = targetElement.methodName
+    var lineNumber = targetElement.lineNumber
+    if (lineNumber < 0) {
+        lineNumber = 0
+    }
+    return "[ ($className:$lineNumber)#$methodName ] "
+}

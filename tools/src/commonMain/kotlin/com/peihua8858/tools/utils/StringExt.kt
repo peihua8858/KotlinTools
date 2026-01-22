@@ -195,10 +195,43 @@ fun StringBuilder.deleteEndChar(endChar: String): StringBuilder {
     return this
 }
 
+
+/**
+ * 驼峰转下划线
+ */
+fun String.camelToSnakeCase(): String {
+    return this.replace(Regex("([A-Z])"), "_$1").lowercase()
+}
+
+/**
+ * 下划线转驼峰
+ */
+fun String.snakeToCamelCase(): String {
+    return this.split("_").joinToString("") { replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
+}
+
+/**
+ * 字符串截断
+ */
+fun String.ellipsis(maxLength: Int): String {
+    return if (this.length >= maxLength) {
+        this.substring(0, maxLength) + "..."
+    } else {
+        this
+    }
+}
+
+fun String.textOverflow(maxLength: Int): String {
+    return if (this.length >= maxLength) {
+        this.substring(0, maxLength)
+    } else {
+        this
+    }
+}
+
 inline fun <C : CharSequence> C?.ifNullOrEmpty(defaultValue: () -> C): C =
     if (isNullOrEmpty()) defaultValue() else this
 
-@SinceKotlin("1.3")
 inline fun <C : CharSequence> C?.ifNullOrBlank(defaultValue: () -> C): C =
     if (isNullOrBlank()) defaultValue() else this
 

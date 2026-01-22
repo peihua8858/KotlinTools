@@ -11,6 +11,7 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
@@ -382,7 +383,6 @@ val Context.screenHeight: Int
     get() = resources.displayMetrics.heightPixels
 
 
-
 object ContextExt {
 
     @JvmStatic
@@ -393,6 +393,24 @@ object ContextExt {
 
 val Context.isLandscape: Boolean
     get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+val Context?.isFinishing: Boolean
+    get() = this?.let {
+        when (it) {
+            is Activity -> it.isFinishing
+            is ContextWrapper -> it.baseContext.isFinishing
+            else -> false
+        }
+    } == true
+
+val Context?.isResumed: Boolean
+    get() = this?.let {
+        when (it) {
+            is Activity -> it.isResumed
+            is ContextWrapper -> it.baseContext.isResumed
+            else -> false
+        }
+    } == true
 
 fun Context.installApk(apkPath: String) {
     installApk(File(apkPath))
