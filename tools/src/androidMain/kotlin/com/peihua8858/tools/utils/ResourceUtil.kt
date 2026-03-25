@@ -1,5 +1,6 @@
 @file:JvmName("ResourceUtil")
 @file:JvmMultifileClass
+
 package com.peihua8858.tools.utils
 
 import android.content.Context
@@ -14,7 +15,7 @@ import java.io.InputStream
 import kotlin.math.roundToInt
 
 internal fun Any?.getResource(): Resources? {
-    val context: Context =  ContextInitializer.mContext
+    val context: Context = ContextInitializer.mContext
     return context.resources
 }
 
@@ -28,11 +29,15 @@ fun Any?.getNameWithResId(@IdRes resourceId: Int): String? {
 }
 
 fun Any?.getIdWithName(resourceTypeName: String, resourceName: String): Int {
-    val context: Context =  ContextInitializer.mContext
-    return context.resources.getIdentifier(
+    val context: Context = ContextInitializer.mContext
+    return context.getIdWithName(resourceName, resourceTypeName, context.packageName)
+}
+
+fun Context.getIdWithName(resourceTypeName: String, resourceName: String, defPackage: String = packageName): Int {
+    return resources.getIdentifier(
         resourceName,
         resourceTypeName,
-        context.packageName
+        defPackage
     )
 }
 
@@ -77,7 +82,7 @@ fun Any?.getString(resourceName: String, vararg formatArgs: Any?): String {
 }
 
 fun Any?.getColor(@ColorRes resourceId: Int, @ColorInt defaultColor: Int): Int {
-    val context: Context =  ContextInitializer.mContext
+    val context: Context = ContextInitializer.mContext
     return getColor(context, resourceId)
 }
 
@@ -247,12 +252,12 @@ fun Context.getResourceId(attrId: Int): Int {
 }
 
 fun Any?.getColorCompat(@ColorRes resId: Int): Int {
-    val context: Context =  ContextInitializer.mContext
+    val context: Context = ContextInitializer.mContext
     return ContextCompat.getColor(context, resId)
 }
 
 fun Any?.getDrawableCompat(@DrawableRes resId: Int): Drawable? {
-    val context: Context =  ContextInitializer.mContext
+    val context: Context = ContextInitializer.mContext
     return ContextCompat.getDrawable(context, resId)
 }
 

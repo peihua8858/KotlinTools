@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.peihua8858.tools.ContextInitializer
 import com.peihua8858.tools.utils.getDimens
+import com.peihua8858.tools.utils.getIdWithName
 import com.peihua8858.tools.utils.getResourceId
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -210,3 +211,15 @@ fun Context?.startActivityByShareElement(intent: Intent, shareView: View? = null
         }
     }
 }
+
+val Context.statusBarHeight: Int
+    get() {
+        var result = 0
+        val resourceId = getIdWithName("status_bar_height", "dimen", "android")
+        if (resourceId != 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
+
