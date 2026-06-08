@@ -23,6 +23,10 @@ import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.peihua8858.tools.ContextInitializer
 import com.peihua8858.tools.listener.OnNoDoubleClickListener
 import java.lang.Exception
@@ -379,7 +383,9 @@ fun View?.setPaddingStartByDp(start: Int) {
  * @date 2022/5/14 19:12
  * @version 1.0
  */
-fun View.animationWidth(isExpend: Boolean, width: Int = 0, duration: Long = 300) {
+fun View.animationWidth(
+    lifecycleOwner: LifecycleOwner? = this.findViewTreeLifecycleOwner(),
+    isExpend: Boolean, width: Int = 0, duration: Long = 300) {
     val widthId = 0x20133542
     var offset = width
     if (offset == 0) {
@@ -393,15 +399,51 @@ fun View.animationWidth(isExpend: Boolean, width: Int = 0, duration: Long = 300)
             setTag(widthId, offset)
         }
     }
+    // 如果生命周期已经销毁，不启动动画
+    if (lifecycleOwner?.lifecycle?.currentState == Lifecycle.State.DESTROYED) {
+        return
+    }
     val viewWrapper = ViewWrapper(this)
     val animation = if (isExpend) ObjectAnimator.ofInt(
         viewWrapper, "width", 0, width
     )
     else ObjectAnimator.ofInt(viewWrapper, "width", width, 0)
     animation.duration = duration
+    var lifecycleObserver: DefaultLifecycleObserver? = null
+    val attachStateListener = object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View) = Unit
+
+        override fun onViewDetachedFromWindow(v: View) {
+            animation.cancel()
+            v.removeOnAttachStateChangeListener(this)
+        }
+    }
+    addOnAttachStateChangeListener(attachStateListener)
+    if (lifecycleOwner != null) {
+        lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                animation.cancel()
+                owner.lifecycle.removeObserver(this)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+    }
     animation.addListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator) {
             if (!isExpend) this@animationWidth.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
+        }
+        override fun onAnimationCancel(animation: Animator) {
+            if (!isExpend) this@animationWidth.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
         }
     })
     animation.addUpdateListener {
@@ -421,7 +463,9 @@ fun View.animationWidth(isExpend: Boolean, width: Int = 0, duration: Long = 300)
  * @date 2022/5/14 19:12
  * @version 1.0
  */
-fun View.animationHeight(isExpend: Boolean, height: Int = 0, duration: Long = 300) {
+fun View.animationHeight(
+    lifecycleOwner: LifecycleOwner? = this.findViewTreeLifecycleOwner(),
+    isExpend: Boolean, height: Int = 0, duration: Long = 300) {
     val heightId = 0x20133543
     var offset = height
     if (offset == 0) {
@@ -436,16 +480,52 @@ fun View.animationHeight(isExpend: Boolean, height: Int = 0, duration: Long = 30
         }
         setTag(heightId, offset)
     }
+    // 如果生命周期已经销毁，不启动动画
+    if (lifecycleOwner?.lifecycle?.currentState == Lifecycle.State.DESTROYED) {
+        return
+    }
     val viewWrapper = ViewWrapper(this)
     val animation = if (isExpend) ObjectAnimator.ofInt(
         viewWrapper, "height", 0, offset
     )
     else ObjectAnimator.ofInt(viewWrapper, "height", offset, 0)
     animation.duration = duration
+    var lifecycleObserver: DefaultLifecycleObserver? = null
+    val attachStateListener = object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View) = Unit
+
+        override fun onViewDetachedFromWindow(v: View) {
+            animation.cancel()
+            v.removeOnAttachStateChangeListener(this)
+        }
+    }
+    addOnAttachStateChangeListener(attachStateListener)
+    if (lifecycleOwner != null) {
+        lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                animation.cancel()
+                owner.lifecycle.removeObserver(this)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+    }
     animation.addListener(object : AnimatorListenerAdapter() {
 
         override fun onAnimationEnd(animation: Animator) {
             if (!isExpend) this@animationHeight.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
+        }
+        override fun onAnimationCancel(animation: Animator) {
+            if (!isExpend) this@animationHeight.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
         }
     })
     animation.addUpdateListener {
@@ -476,6 +556,7 @@ fun View?.setMargin(view: View) {
  * @version 1.0
  */
 fun View.animationWidth(
+    lifecycleOwner: LifecycleOwner? = this.findViewTreeLifecycleOwner(),
     isExpend: Boolean, width: Int, duration: Long = 300,
     model: (AnimatorListenerModel<Animator>.() -> Unit)? = null,
 ) {
@@ -492,6 +573,10 @@ fun View.animationWidth(
             setTag(widthId, offset)
         }
     }
+    // 如果生命周期已经销毁，不启动动画
+    if (lifecycleOwner?.lifecycle?.currentState == Lifecycle.State.DESTROYED) {
+        return
+    }
     val viewWrapper = ViewWrapper(this)
     val animation = if (isExpend) ObjectAnimator.ofInt(
         viewWrapper, "width", 0, width
@@ -499,6 +584,25 @@ fun View.animationWidth(
     else ObjectAnimator.ofInt(viewWrapper, "width", width, 0)
     animation.duration = duration
     val listener = if (model != null) AnimatorListenerModel<Animator>().apply(model) else null
+    var lifecycleObserver: DefaultLifecycleObserver? = null
+    val attachStateListener = object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View) = Unit
+
+        override fun onViewDetachedFromWindow(v: View) {
+            animation.cancel()
+            v.removeOnAttachStateChangeListener(this)
+        }
+    }
+    addOnAttachStateChangeListener(attachStateListener)
+    if (lifecycleOwner != null) {
+        lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                animation.cancel()
+                owner.lifecycle.removeObserver(this)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+    }
     animation.addListener(object : InternalAnimatorListenerAdapter(listener) {
         override fun onAnimationStart(animation: Animator) {
             super.onAnimationStart(animation)
@@ -508,6 +612,19 @@ fun View.animationWidth(
         override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
             if (!isExpend) this@animationWidth.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
+        }
+        override fun onAnimationCancel(animation: Animator) {
+            super.onAnimationCancel(animation)
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
         }
     })
     animation.addUpdateListener {
@@ -527,6 +644,7 @@ fun View.animationWidth(
  * @version 1.0
  */
 fun View.animationHeight(
+    lifecycleOwner: LifecycleOwner? = this.findViewTreeLifecycleOwner(),
     isExpend: Boolean, height: Int = 0, duration: Long = 300,
     model: (AnimatorListenerModel<Animator>.() -> Unit)? = null,
 ) {
@@ -544,6 +662,10 @@ fun View.animationHeight(
         }
         setTag(heightId, offset)
     }
+    // 如果生命周期已经销毁，不启动动画
+    if (lifecycleOwner?.lifecycle?.currentState == Lifecycle.State.DESTROYED) {
+        return
+    }
     val viewWrapper = ViewWrapper(this)
     val animation = if (isExpend) ObjectAnimator.ofInt(
         viewWrapper, "height", 0, offset
@@ -551,10 +673,43 @@ fun View.animationHeight(
     else ObjectAnimator.ofInt(viewWrapper, "height", offset, 0)
     animation.duration = duration
     val listener = if (model != null) AnimatorListenerModel<Animator>().apply(model) else null
+    var lifecycleObserver: DefaultLifecycleObserver? = null
+    val attachStateListener = object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View) = Unit
+
+        override fun onViewDetachedFromWindow(v: View) {
+            animation.cancel()
+            v.removeOnAttachStateChangeListener(this)
+        }
+    }
+    addOnAttachStateChangeListener(attachStateListener)
+    if (lifecycleOwner != null) {
+        lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                animation.cancel()
+                owner.lifecycle.removeObserver(this)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+    }
     animation.addListener(object : InternalAnimatorListenerAdapter(listener) {
         override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
             if (!isExpend) this@animationHeight.visibility = View.GONE
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+            super.onAnimationCancel(animation)
+            lifecycleObserver?.let {
+                lifecycleOwner?.lifecycle?.removeObserver(it)
+            }
+            animation.removeListener(this)
+            removeOnAttachStateChangeListener(attachStateListener)
         }
     })
     animation.addUpdateListener {
